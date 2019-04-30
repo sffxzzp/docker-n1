@@ -116,7 +116,7 @@ https://*.wikipedia.org:443, https://*.wikinews.org:443 {
     }
 }
 
-https://tumblr.com:443 {
+https://tumblr.com:443, https://www.tumblr.com:443 {
     tls unblock.crt unblock.key
     proxy / https://66.6.32.31 https://66.6.33.31 {
         transparent
@@ -125,7 +125,7 @@ https://tumblr.com:443 {
     }
 }
 
-https://*.media.tumblr.com:443 {
+https://*.media.tumblr.com:443, https://assets.tumblr.com:443 {
     tls unblock.crt unblock.key
     proxy / https://152.199.38.136 {
         transparent
@@ -143,7 +143,7 @@ https://*.srvcs.tumblr.com:443 {
     }
 }
 
-https://reddit.com:443, https://*.reddit.com:443, https://redd.it:443, https://*.redd.it:443 {
+https://reddit.com:443, https://*.reddit.com:443, https://redd.it:443, https://*.redd.it:443, https://*.redditmedia.com:443 {
     tls unblock.crt unblock.key
     proxy / https://151.101.193.140 https://151.101.129.140 https://151.101.65.140 {
         transparent
