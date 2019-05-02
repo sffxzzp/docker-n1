@@ -160,3 +160,30 @@ https://imgur.com:443, https://*.imgur.com:443 {
         insecure_skip_verify
     }
 }
+
+https://*.instagram.com:443 {
+    tls unblock.crt unblock.key
+    proxy / https://157.240.11.174 https://157.240.13.174 https://157.240.15.174 https://157.240.25.174 {
+        transparent
+        header_upstream Host {host}
+        insecure_skip_verify
+    }
+}
+
+https://change.org:443, https://*.change.org:443 {
+    tls unblock.crt unblock.key
+    proxy / https://104.16.4.13 https://104.16.5.13 {
+        transparent
+        header_upstream Host {host}
+        insecure_skip_verify
+    }
+}
+
+https://onedrive.live.com:443 {
+    tls unblock.crt unblock.key
+    proxy / https://13.107.42.13 {
+        transparent
+        header_upstream Host {host}
+        insecure_skip_verify
+    }
+}
