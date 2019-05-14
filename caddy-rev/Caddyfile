@@ -1,4 +1,8 @@
-https://steamcommunity.com:443, https://www.steamcommunity.com:443, https://store.steampowered.com:443, https://api.steampowered.com:443 {
+http://* {
+    redir https://{host}{uri}
+}
+
+https://steamcommunity.com, https://www.steamcommunity.com, https://store.steampowered.com, https://api.steampowered.com {
     tls unblock.crt unblock.key
     proxy / https://steamuserimages-a.akamaihd.net https://steamcdn-a.akamaihd.net https://steamstore-a.akamaihd.net https://steamcommunity-a.akamaihd.net https://steampipe.akamaized.net https://origin-a.akamaihd.net https://blzddist1-a.akamaihd.net https://blzddistkr1-a.akamaihd.net https://eaassets-a.akamaihd.net https://humblebundle-a.akamaihd.net https://steamcommunity-a.akamaihd.net {
         policy random
@@ -9,7 +13,7 @@ https://steamcommunity.com:443, https://www.steamcommunity.com:443, https://stor
     }
 }
 
-https://discordapp.com:443 {
+https://discordapp.com {
     tls unblock.crt unblock.key
     proxy / https://104.16.58.5 https://104.16.59.5 {
         transparent
@@ -18,7 +22,7 @@ https://discordapp.com:443 {
     }
 }
 
-https://dl.discordapp.net:443, https://media.discordapp.net:443, https://images-ext-1.discordapp.net:443, images-ext-2.discordapp.net:443 {
+https://dl.discordapp.net, https://media.discordapp.net, https://images-ext-1.discordapp.net, https://images-ext-2.discordapp.net {
     tls unblock.crt unblock.key
     proxy / https://104.16.247.144 https://104.16.248.144 https://104.16.249.144 https://104.16.250.144 https://104.16.251.144 {
         transparent
@@ -27,7 +31,7 @@ https://dl.discordapp.net:443, https://media.discordapp.net:443, https://images-
     }
 }
 
-https://cdn.discordapp.com:443 {
+https://cdn.discordapp.com {
     tls unblock.crt unblock.key
     proxy / https://104.16.9.231 https://104.16.10.231 https://104.16.11.231 https://104.16.12.231 https://104.16.13.231 {
         transparent
@@ -36,7 +40,7 @@ https://cdn.discordapp.com:443 {
     }
 }
 
-https://support.discordapp.com:443 {
+https://support.discordapp.com {
     tls unblock.crt unblock.key
     proxy / https://104.16.51.111 https://104.16.52.111 https://104.16.53.111 https://104.16.54.111 https://104.16.55.111 {
         transparent
@@ -45,7 +49,7 @@ https://support.discordapp.com:443 {
     }
 }
 
-https://pixiv.net:443, https://www.pixiv.net:443, https://ssl.pixiv.net:443, https://accounts.pixiv.net:443, https://touch.pixiv.net:443, https://oauth.secure.pixiv.net:443 {
+https://pixiv.net, https://www.pixiv.net, https://ssl.pixiv.net, https://accounts.pixiv.net, https://touch.pixiv.net, https://oauth.secure.pixiv.net {
     tls unblock.crt unblock.key
     proxy / https://210.140.131.182 https://210.140.131.180 https://210.140.131.184 {
         transparent
@@ -54,7 +58,7 @@ https://pixiv.net:443, https://www.pixiv.net:443, https://ssl.pixiv.net:443, htt
     }
 }
 
-https://i.pximg.net:443 {
+https://i.pximg.net {
     tls unblock.crt unblock.key
     proxy / https://210.140.92.135 https://210.140.92.136 https://210.140.92.137 https://210.140.92.139 https://210.140.92.140 https://210.140.92.141 https://210.140.92.142 https://210.140.92.143 https://210.140.92.144 {
         transparent
@@ -63,7 +67,7 @@ https://i.pximg.net:443 {
     }
 }
 
-https://sketch.pixiv.net:443 {
+https://sketch.pixiv.net {
     tls unblock.crt unblock.key
     proxy / https://210.140.174.37 https://210.140.170.179 https://210.140.175.130 {
         transparent
@@ -80,7 +84,7 @@ https://sketch.pixiv.net:443 {
     }
 }
 
-https://factory.pixiv.net:443 {
+https://factory.pixiv.net {
     tls unblock.crt unblock.key
     proxy / https://210.140.131.180 {
         transparent
@@ -89,7 +93,7 @@ https://factory.pixiv.net:443 {
     }
 }
 
-https://dic.pixiv.net:443, https://en-dic.pixiv.net:443, https://sensei.pixiv.net:443, https://fanbox.pixiv.net:443, https://payment.pixiv.net:443 {
+https://dic.pixiv.net, https://en-dic.pixiv.net, https://sensei.pixiv.net, https://fanbox.pixiv.net, https://payment.pixiv.net {
     tls unblock.crt unblock.key
     proxy / https://210.140.131.222 {
         transparent
@@ -98,7 +102,7 @@ https://dic.pixiv.net:443, https://en-dic.pixiv.net:443, https://sensei.pixiv.ne
     }
 }
 
-https://imgaz.pixiv.net:443, https://comic.pixiv.net:443, https://novel.pixiv.net:443, https://source.pixiv.net:443, https://i1.pixiv.net:443, https://i2.pixiv.net:443, https://i3.pixiv.net:443, https://i4.pixiv.net:443 {
+https://imgaz.pixiv.net, https://comic.pixiv.net, https://novel.pixiv.net, https://source.pixiv.net, https://i1.pixiv.net, https://i2.pixiv.net, https://i3.pixiv.net, https://i4.pixiv.net {
     tls unblock.crt unblock.key
     proxy / https://210.140.131.144 https://210.140.131.145 https://210.140.131.147 https://210.140.131.153 {
         transparent
@@ -107,7 +111,7 @@ https://imgaz.pixiv.net:443, https://comic.pixiv.net:443, https://novel.pixiv.ne
     }
 }
 
-https://*.wikipedia.org:443, https://*.wikinews.org:443 {
+https://*.wikipedia.org, https://*.wikinews.org {
     tls unblock.crt unblock.key
     proxy / https://103.102.166.224 {
         transparent
@@ -116,7 +120,7 @@ https://*.wikipedia.org:443, https://*.wikinews.org:443 {
     }
 }
 
-https://tumblr.com:443, https://www.tumblr.com:443 {
+https://tumblr.com, https://www.tumblr.com {
     tls unblock.crt unblock.key
     proxy / https://66.6.32.31 https://66.6.33.31 {
         transparent
@@ -125,7 +129,7 @@ https://tumblr.com:443, https://www.tumblr.com:443 {
     }
 }
 
-https://*.media.tumblr.com:443, https://assets.tumblr.com:443 {
+https://*.media.tumblr.com, https://assets.tumblr.com {
     tls unblock.crt unblock.key
     proxy / https://152.199.38.136 {
         transparent
@@ -134,7 +138,7 @@ https://*.media.tumblr.com:443, https://assets.tumblr.com:443 {
     }
 }
 
-https://*.srvcs.tumblr.com:443 {
+https://*.srvcs.tumblr.com {
     tls unblock.crt unblock.key
     proxy / https://119.161.14.20 https://119.161.16.14 https://119.161.14.19 {
         transparent
@@ -143,7 +147,7 @@ https://*.srvcs.tumblr.com:443 {
     }
 }
 
-https://reddit.com:443, https://*.reddit.com:443, https://redd.it:443, https://*.redd.it:443, https://*.redditmedia.com:443 {
+https://reddit.com, https://*.reddit.com, https://redd.it, https://*.redd.it, https://*.redditmedia.com {
     tls unblock.crt unblock.key
     proxy / https://151.101.193.140 https://151.101.129.140 https://151.101.65.140 {
         transparent
@@ -152,7 +156,7 @@ https://reddit.com:443, https://*.reddit.com:443, https://redd.it:443, https://*
     }
 }
 
-https://imgur.com:443, https://*.imgur.com:443 {
+https://imgur.com, https://*.imgur.com {
     tls unblock.crt unblock.key
     proxy / https://151.101.40.193 https://151.101.24.193 https://151.101.32.193 {
         transparent
@@ -161,7 +165,7 @@ https://imgur.com:443, https://*.imgur.com:443 {
     }
 }
 
-https://*.instagram.com:443 {
+https://*.instagram.com {
     tls unblock.crt unblock.key
     proxy / https://157.240.11.174 https://157.240.13.174 https://157.240.15.174 https://157.240.25.174 {
         transparent
@@ -170,7 +174,7 @@ https://*.instagram.com:443 {
     }
 }
 
-https://change.org:443, https://*.change.org:443 {
+https://change.org, https://*.change.org {
     tls unblock.crt unblock.key
     proxy / https://104.16.4.13 https://104.16.5.13 {
         transparent
@@ -179,7 +183,7 @@ https://change.org:443, https://*.change.org:443 {
     }
 }
 
-https://onedrive.live.com:443 {
+https://onedrive.live.com {
     tls unblock.crt unblock.key
     proxy / https://13.107.42.13 {
         transparent
