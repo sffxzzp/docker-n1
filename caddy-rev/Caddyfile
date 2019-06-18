@@ -120,6 +120,15 @@ https://*.wikipedia.org, https://*.wikinews.org {
     }
 }
 
+https://*.m.wikipedia.org, https://m.wikipedia.org {
+    tls unblock.crt unblock.key
+    proxy / https://198.35.26.96 {
+        transparent
+        header_upstream Host {host}
+        insecure_skip_verify
+    }
+}
+
 https://tumblr.com, https://www.tumblr.com {
     tls unblock.crt unblock.key
     proxy / https://66.6.32.31 https://66.6.33.31 {
@@ -186,6 +195,15 @@ https://change.org, https://*.change.org {
 https://onedrive.live.com {
     tls unblock.crt unblock.key
     proxy / https://13.107.42.13 {
+        transparent
+        header_upstream Host {host}
+        insecure_skip_verify
+    }
+}
+
+https://skyapi.onedrive.live.com {
+    tls unblock.crt unblock.key
+    proxy / https://40.90.136.179 https://40.90.136.180 {
         transparent
         header_upstream Host {host}
         insecure_skip_verify
