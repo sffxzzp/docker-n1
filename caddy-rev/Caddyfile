@@ -209,3 +209,12 @@ https://skyapi.onedrive.live.com {
         insecure_skip_verify
     }
 }
+
+https://pornhub.com, https://*.pornhub.com {
+    tls unblock.crt unblock.key
+    proxy / https://66.254.114.41 {
+        transparent
+        header_upstream Host {host}
+        insecure_skip_verify
+    }
+}
