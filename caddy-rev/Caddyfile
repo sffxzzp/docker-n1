@@ -1,10 +1,6 @@
-http://* {
-    redir https://{host}{uri}
-}
-
 https://steamcommunity.com, https://www.steamcommunity.com, https://store.steampowered.com, https://api.steampowered.com {
     tls unblock.crt unblock.key
-    proxy / https://steamuserimages-a.akamaihd.net https://steamcdn-a.akamaihd.net https://steamstore-a.akamaihd.net https://steamcommunity-a.akamaihd.net https://steampipe.akamaized.net https://origin-a.akamaihd.net https://blzddist1-a.akamaihd.net https://blzddistkr1-a.akamaihd.net https://eaassets-a.akamaihd.net https://humblebundle-a.akamaihd.net https://steamcommunity-a.akamaihd.net {
+    proxy / https://steamuserimages-a.akamaihd.net https://steamstore-a.akamaihd.net https://steamcommunity-a.akamaihd.net https://steampipe.akamaized.net https://eaassets-a.akamaihd.net https://humblebundle-a.akamaihd.net https://steamcommunity-a.akamaihd.net {
         policy random
         fail_timeout 5s
         timeout 30s
@@ -122,7 +118,7 @@ https://*.wikipedia.org, https://*.wikinews.org {
 
 https://*.m.wikipedia.org, https://m.wikipedia.org {
     tls unblock.crt unblock.key
-    proxy / https://198.35.26.96 {
+    proxy / https://103.102.166.224 {
         transparent
         header_upstream Host {host}
         insecure_skip_verify
@@ -156,7 +152,7 @@ https://*.srvcs.tumblr.com {
     }
 }
 
-https://reddit.com, https://*.reddit.com, https://redd.it, https://*.redd.it, https://*.redditmedia.com {
+https://reddit.com, https://*.reddit.com, https://redd.it, https://*.redd.it, http://*.redditmedia.com {
     tls unblock.crt unblock.key
     proxy / https://151.101.193.140 https://151.101.129.140 https://151.101.65.140 {
         transparent
@@ -217,4 +213,8 @@ https://pornhub.com, https://*.pornhub.com {
         header_upstream Host {host}
         insecure_skip_verify
     }
+}
+
+http://* {
+    redir https://{host}{uri}
 }
