@@ -1,13 +1,13 @@
-ÓÃÓÚ±¾µØ·´´úµÄCaddyÅäÖÃ¡£
+ç”¨äºæœ¬åœ°åä»£çš„Caddyé…ç½®ã€‚
 
-opensslĞèÒª×ÔĞĞÏÂÔØ¡£
+openssléœ€è¦è‡ªè¡Œä¸‹è½½ã€‚
 
-ÆäÖĞopenssl/CA/@gen.batÓÃÓÚÉú³ÉÖ¤Êé¡£
+å…¶ä¸­openssl/CA/@gen.batç”¨äºç”Ÿæˆè¯ä¹¦ã€‚
 
-Éú³ÉµÄÖ¤ÊéÔÚopenssl/CA/UnblockÄ¿Â¼ÏÂ¡£
+ç”Ÿæˆçš„è¯ä¹¦åœ¨openssl/CA/Unblockç›®å½•ä¸‹ã€‚
 
-cacert.pem ÓÃÓÚÌí¼Ó Linux ĞÅÈÎ¸ùÖ¤Êé
+cacert.pem ç”¨äºæ·»åŠ  Linux ä¿¡ä»»æ ¹è¯ä¹¦ã€‚Ubuntu ä¿å­˜ cacert.pem ä¸º \*.crt åˆ° /usr/local/share/ca-certificatesã€‚ ç„¶å update-ca-certificates å³å¯ã€‚
 
-ca.cer ÓÃÓÚ°²×¿ºÍ Win Ìí¼Ó¸ùÖ¤Êé
+ca.cer ç”¨äºå®‰å“å’Œ Win æ·»åŠ æ ¹è¯ä¹¦
 
-unblock.crt unblock.key ÓÃÓÚ caddy¡£Ğè¿½±´ÖÁ Caddyfile ÏàÍ¬Ä¿Â¼¡£
+unblock.crt unblock.key ç”¨äº caddyã€‚éœ€æ‹·è´è‡³ Caddyfile ç›¸åŒç›®å½•ã€‚
