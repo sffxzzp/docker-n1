@@ -27,6 +27,16 @@
 127.0.0.1	i4.pixiv.net
 #Pixiv END
 
+#Discord Start
+127.0.0.1	discordapp.com
+127.0.0.1	dl.discordapp.net
+127.0.0.1	media.discordapp.net
+127.0.0.1	images-ext-1.discordapp.net
+127.0.0.1	images-ext-2.discordapp.net
+127.0.0.1	cdn.discordapp.com
+127.0.0.1	support.discordapp.com
+#Discord END
+
 #Wikipedia Start
 127.0.0.1	zh.wikipedia.org
 127.0.0.1	zh-yue.wikipedia.org
