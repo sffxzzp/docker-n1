@@ -1,4 +1,4 @@
-https://steamcommunity.com, https://www.steamcommunity.com, https://store.steampowered.com, https://api.steampowered.com {
+https://steamcommunity.com, https://www.steamcommunity.com, https://cdn.steamcommunity.com, https://store.steampowered.com, https://api.steampowered.com {
     tls unblock.crt unblock.key
     proxy / https://steamuserimages-a.akamaihd.net https://steamstore-a.akamaihd.net https://steamcommunity-a.akamaihd.net https://steampipe.akamaized.net https://eaassets-a.akamaihd.net https://humblebundle-a.akamaihd.net https://steamcommunity-a.akamaihd.net {
         policy random
@@ -11,7 +11,7 @@ https://steamcommunity.com, https://www.steamcommunity.com, https://store.steamp
 
 https://discordapp.com {
     tls unblock.crt unblock.key
-    proxy / https://104.16.58.5 https://104.16.59.5 {
+    proxy / https://162.159.134.233 https://162.159.135.233 {
         transparent
         header_upstream Host {host}
         insecure_skip_verify
@@ -20,7 +20,7 @@ https://discordapp.com {
 
 https://dl.discordapp.net, https://media.discordapp.net, https://images-ext-1.discordapp.net, https://images-ext-2.discordapp.net {
     tls unblock.crt unblock.key
-    proxy / https://104.16.247.144 https://104.16.248.144 https://104.16.249.144 https://104.16.250.144 https://104.16.251.144 {
+    proxy / https://162.159.128.232 https://162.159.130.232 https://162.159.133.232 https://162.159.134.232 {
         transparent
         header_upstream Host {host}
         insecure_skip_verify
@@ -29,7 +29,7 @@ https://dl.discordapp.net, https://media.discordapp.net, https://images-ext-1.di
 
 https://cdn.discordapp.com {
     tls unblock.crt unblock.key
-    proxy / https://104.16.9.231 https://104.16.10.231 https://104.16.11.231 https://104.16.12.231 https://104.16.13.231 {
+    proxy / https://162.159.129.233 https://162.159.130.233 https://162.159.133.233 https://162.159.134.233 https://162.159.135.233 {
         transparent
         header_upstream Host {host}
         insecure_skip_verify
