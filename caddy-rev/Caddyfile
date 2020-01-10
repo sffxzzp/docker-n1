@@ -215,6 +215,27 @@ https://pornhub.com, https://*.pornhub.com {
     }
 }
 
+https://mega.nz {
+    tls unblock.crt unblock.key
+    proxy / https://31.216.148.10 {
+        transparent
+        header_upstream Host {host}
+        insecure_skip_verify
+    }
+}
+
+https://*.karere.mega.nz {
+    tls unblock.crt unblock.key
+    proxy / https://31.216.147.155  {
+        websocket
+        transparent
+        header_upstream Upgrade websocket
+        header_upstream Connection Upgrade
+        header_upstream Host {host}
+        insecure_skip_verify
+    }
+}
+
 http://* {
     redir https://{host}{uri}
 }

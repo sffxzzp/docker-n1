@@ -153,3 +153,8 @@
 127.0.0.1	onedrive.live.com
 127.0.0.1	skyapi.onedrive.live.com
 #OneDrive END
+
+#MEGA Start
+127.0.0.1	mega.nz
+#127.0.0.1	mcd270n310.karere.mega.nz
+#MEGA END
