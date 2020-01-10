@@ -215,6 +215,24 @@ https://pornhub.com, https://*.pornhub.com {
     }
 }
 
+https://nyaa.si {
+    tls unblock.crt unblock.key
+    proxy / https://185.178.208.182 {
+        transparent
+        header_upstream Host {host}
+        insecure_skip_verify
+    }
+}
+
+https://sukebei.nyaa.si {
+    tls unblock.crt unblock.key
+    proxy / https://185.221.200.12 {
+        transparent
+        header_upstream Host {host}
+        insecure_skip_verify
+    }
+}
+
 https://mega.nz {
     tls unblock.crt unblock.key
     proxy / https://31.216.148.10 {
