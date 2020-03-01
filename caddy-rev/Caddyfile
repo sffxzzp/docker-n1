@@ -244,11 +244,20 @@ https://mega.nz {
 
 https://*.karere.mega.nz {
     tls unblock.crt unblock.key
-    proxy / https://31.216.147.155  {
+    proxy / https://31.216.147.155 {
         websocket
         transparent
         header_upstream Upgrade websocket
         header_upstream Connection Upgrade
+        header_upstream Host {host}
+        insecure_skip_verify
+    }
+}
+
+https://archiveofourown.org {
+    tls unblock.crt unblock.key
+    proxy / https://104.153.64.122 {
+        transparent
         header_upstream Host {host}
         insecure_skip_verify
     }

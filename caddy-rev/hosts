@@ -163,3 +163,7 @@
 127.0.0.1	nyaa.si
 127.0.0.1	sukebei.nyaa.si
 #Nyaa.si END
+
+#AO3 Start
+127.0.0.1	archiveofourown,org
+#AO3 END
