@@ -109,7 +109,7 @@ https://imgaz.pixiv.net, https://comic.pixiv.net, https://novel.pixiv.net, https
 
 https://*.wikipedia.org, https://*.wikinews.org {
     tls unblock.crt unblock.key
-    proxy / https://103.102.166.224 {
+    proxy / https://208.80.154.224 {
         transparent
         header_upstream Host {host}
         insecure_skip_verify
@@ -118,7 +118,7 @@ https://*.wikipedia.org, https://*.wikinews.org {
 
 https://*.m.wikipedia.org, https://m.wikipedia.org {
     tls unblock.crt unblock.key
-    proxy / https://103.102.166.224 {
+    proxy / https://208.80.154.224 {
         transparent
         header_upstream Host {host}
         insecure_skip_verify
