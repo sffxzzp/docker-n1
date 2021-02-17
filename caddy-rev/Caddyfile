@@ -1,268 +1,331 @@
+{
+    auto_https off
+}
+
 https://steamcommunity.com, https://www.steamcommunity.com, https://cdn.steamcommunity.com, https://store.steampowered.com, https://api.steampowered.com {
     tls unblock.crt unblock.key
-    proxy / https://steamuserimages-a.akamaihd.net https://steamstore-a.akamaihd.net https://steamcommunity-a.akamaihd.net https://steampipe.akamaized.net https://eaassets-a.akamaihd.net https://humblebundle-a.akamaihd.net https://steamcommunity-a.akamaihd.net {
-        policy random
-        fail_timeout 5s
-        timeout 30s
-        transparent
-        header_upstream Host {host}
+    reverse_proxy * https://steamusercontent-a.akamaihd.net {
+        lb_policy random
+        fail_duration 10s
+        health_timeout 30s
+        transport http {
+            tls
+        }
     }
 }
 
 https://discordapp.com {
     tls unblock.crt unblock.key
-    proxy / https://162.159.134.233 https://162.159.135.233 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://162.159.134.233 https://162.159.135.233 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://dl.discordapp.net, https://media.discordapp.net, https://images-ext-1.discordapp.net, https://images-ext-2.discordapp.net {
     tls unblock.crt unblock.key
-    proxy / https://162.159.128.232 https://162.159.130.232 https://162.159.133.232 https://162.159.134.232 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://162.159.128.232 https://162.159.130.232 https://162.159.133.232 https://162.159.134.232 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://cdn.discordapp.com {
     tls unblock.crt unblock.key
-    proxy / https://162.159.129.233 https://162.159.130.233 https://162.159.133.233 https://162.159.134.233 https://162.159.135.233 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://162.159.129.233 https://162.159.130.233 https://162.159.133.233 https://162.159.134.233 https://162.159.135.233 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://support.discordapp.com {
     tls unblock.crt unblock.key
-    proxy / https://104.16.51.111 https://104.16.52.111 https://104.16.53.111 https://104.16.54.111 https://104.16.55.111 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://104.16.51.111 https://104.16.52.111 https://104.16.53.111 https://104.16.54.111 https://104.16.55.111 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://pixiv.net, https://www.pixiv.net, https://ssl.pixiv.net, https://accounts.pixiv.net, https://touch.pixiv.net, https://oauth.secure.pixiv.net {
     tls unblock.crt unblock.key
-    proxy / https://210.140.131.182 https://210.140.131.180 https://210.140.131.184 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://210.140.131.182 https://210.140.131.180 https://210.140.131.184 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://i.pximg.net {
     tls unblock.crt unblock.key
-    proxy / https://210.140.92.135 https://210.140.92.136 https://210.140.92.137 https://210.140.92.139 https://210.140.92.140 https://210.140.92.141 https://210.140.92.142 https://210.140.92.143 https://210.140.92.144 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://210.140.92.135 https://210.140.92.136 https://210.140.92.137 https://210.140.92.139 https://210.140.92.140 https://210.140.92.141 https://210.140.92.142 https://210.140.92.143 https://210.140.92.144 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://sketch.pixiv.net {
     tls unblock.crt unblock.key
-    proxy / https://210.140.174.37 https://210.140.170.179 https://210.140.175.130 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://210.140.174.37 https://210.140.170.179 https://210.140.175.130 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
-    proxy /ws https://210.140.174.37 https://210.140.170.179 https://210.140.175.130 {
-        websocket
-        transparent
-        header_upstream Upgrade websocket
-        header_upstream Connection Upgrade
-        header_upstream Host {host}
-        insecure_skip_verify
+    tls unblock.crt unblock.key
+    reverse_proxy /ws* https://210.140.174.37 https://210.140.170.179 https://210.140.175.130 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://factory.pixiv.net {
     tls unblock.crt unblock.key
-    proxy / https://210.140.131.180 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://210.140.131.180 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://dic.pixiv.net, https://en-dic.pixiv.net, https://sensei.pixiv.net, https://fanbox.pixiv.net, https://payment.pixiv.net {
     tls unblock.crt unblock.key
-    proxy / https://210.140.131.222 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://210.140.131.222 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://imgaz.pixiv.net, https://comic.pixiv.net, https://novel.pixiv.net, https://source.pixiv.net, https://i1.pixiv.net, https://i2.pixiv.net, https://i3.pixiv.net, https://i4.pixiv.net {
     tls unblock.crt unblock.key
-    proxy / https://210.140.131.144 https://210.140.131.145 https://210.140.131.147 https://210.140.131.153 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://210.140.131.144 https://210.140.131.145 https://210.140.131.147 https://210.140.131.153 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://*.wikipedia.org, https://*.wikinews.org {
     tls unblock.crt unblock.key
-    proxy / https://208.80.154.224 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://208.80.154.224 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://*.m.wikipedia.org, https://m.wikipedia.org {
     tls unblock.crt unblock.key
-    proxy / https://208.80.154.224 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://208.80.154.224 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://tumblr.com, https://www.tumblr.com {
     tls unblock.crt unblock.key
-    proxy / https://66.6.32.31 https://66.6.33.31 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://66.6.32.31 https://66.6.33.31 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://*.media.tumblr.com, https://assets.tumblr.com {
     tls unblock.crt unblock.key
-    proxy / https://152.199.38.136 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://152.199.38.136 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://*.srvcs.tumblr.com {
     tls unblock.crt unblock.key
-    proxy / https://119.161.14.20 https://119.161.16.14 https://119.161.14.19 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://119.161.14.20 https://119.161.16.14 https://119.161.14.19 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
-https://reddit.com, https://*.reddit.com, https://redd.it, https://*.redd.it, http://*.redditmedia.com {
+https://reddit.com, https://*.reddit.com, https://redd.it, https://*.redd.it, https://*.redditmedia.com {
     tls unblock.crt unblock.key
-    proxy / https://151.101.193.140 https://151.101.129.140 https://151.101.65.140 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://151.101.193.140 https://151.101.129.140 https://151.101.65.140 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://imgur.com, https://*.imgur.com {
     tls unblock.crt unblock.key
-    proxy / https://151.101.40.193 https://151.101.24.193 https://151.101.32.193 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://151.101.40.193 https://151.101.24.193 https://151.101.32.193 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://*.instagram.com {
     tls unblock.crt unblock.key
-    proxy / https://157.240.11.174 https://157.240.13.174 https://157.240.15.174 https://157.240.25.174 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://157.240.11.174 https://157.240.13.174 https://157.240.15.174 https://157.240.25.174 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://change.org, https://*.change.org {
     tls unblock.crt unblock.key
-    proxy / https://104.16.4.13 https://104.16.5.13 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://104.16.4.13 https://104.16.5.13 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://onedrive.live.com {
     tls unblock.crt unblock.key
-    proxy / https://13.107.42.13 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://13.107.42.13 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://skyapi.onedrive.live.com {
     tls unblock.crt unblock.key
-    proxy / https://40.90.136.179 https://40.90.136.180 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://40.90.136.179 https://40.90.136.180 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://pornhub.com, https://*.pornhub.com {
     tls unblock.crt unblock.key
-    proxy / https://66.254.114.41 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://66.254.114.41 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://nyaa.si {
     tls unblock.crt unblock.key
-    proxy / https://185.178.208.182 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://185.178.208.182 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://sukebei.nyaa.si {
     tls unblock.crt unblock.key
-    proxy / https://185.221.200.12 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://185.221.200.12 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://mega.nz {
     tls unblock.crt unblock.key
-    proxy / https://31.216.148.10 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://31.216.148.10 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://*.karere.mega.nz {
     tls unblock.crt unblock.key
-    proxy / https://31.216.147.155 {
-        websocket
-        transparent
-        header_upstream Upgrade websocket
-        header_upstream Connection Upgrade
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://31.216.147.155 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
 https://archiveofourown.org {
     tls unblock.crt unblock.key
-    proxy / https://104.153.64.122 {
-        transparent
-        header_upstream Host {host}
-        insecure_skip_verify
+    reverse_proxy * https://104.153.64.122 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
     }
 }
 
-http://* {
-    redir https://{host}{uri}
+https://bandcamp.com {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://151.101.193.28 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
 }
