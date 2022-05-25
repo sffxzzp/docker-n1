@@ -2,9 +2,10 @@
     auto_https off
 }
 
+# Steam Start
 https://steamcommunity.com, https://www.steamcommunity.com, https://cdn.steamcommunity.com, https://store.steampowered.com, https://api.steampowered.com {
     tls unblock.crt unblock.key
-    reverse_proxy * https://steamusercontent-a.akamaihd.net {
+    reverse_proxy * https://steamuserimages-a.akamaihd.net https://steamstore-a.akamaihd.net https://steamcommunity-a.akamaihd.net https://steampipe.akamaized.net https://eaassets-a.akamaihd.net {
         lb_policy random
         fail_duration 10s
         health_timeout 30s
@@ -13,10 +14,12 @@ https://steamcommunity.com, https://www.steamcommunity.com, https://cdn.steamcom
         }
     }
 }
+# Steam End
 
-https://discordapp.com {
+# Discord Start
+https://discord.com, https://*.discord.com {
     tls unblock.crt unblock.key
-    reverse_proxy * https://162.159.134.233 https://162.159.135.233 {
+    reverse_proxy * https://162.159.135.232 https://162.159.136.232 https://162.159.137.232 https://162.159.138.232 https://162.159.128.233 {
         lb_policy random
         transport http {
             tls
@@ -25,9 +28,9 @@ https://discordapp.com {
     }
 }
 
-https://dl.discordapp.net, https://media.discordapp.net, https://images-ext-1.discordapp.net, https://images-ext-2.discordapp.net {
+https://discordapp.com, https://*.discordapp.com {
     tls unblock.crt unblock.key
-    reverse_proxy * https://162.159.128.232 https://162.159.130.232 https://162.159.133.232 https://162.159.134.232 {
+    reverse_proxy * https://162.159.130.233 https://162.159.133.233 https://162.159.134.233 https://162.159.135.233 https://162.159.129.233 {
         lb_policy random
         transport http {
             tls
@@ -36,9 +39,22 @@ https://dl.discordapp.net, https://media.discordapp.net, https://images-ext-1.di
     }
 }
 
-https://cdn.discordapp.com {
+https://*.discordapp.net {
     tls unblock.crt unblock.key
-    reverse_proxy * https://162.159.129.233 https://162.159.130.233 https://162.159.133.233 https://162.159.134.233 https://162.159.135.233 {
+    reverse_proxy * https://162.159.130.232 https://162.159.133.232 https://162.159.134.232 https://162.159.128.232 https://162.159.129.232 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+# Discord End
+
+# Twitch Start
+https://twitch.tv https://www.twitch.tv https://m.twitch.tv https://app.twitch.tv https://clips.twitch.tv https://gql.twitch.tv https://dashboard.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://twitch.map.fastly.net {
         lb_policy random
         transport http {
             tls
@@ -47,9 +63,9 @@ https://cdn.discordapp.com {
     }
 }
 
-https://support.discordapp.com {
+https://vod-storyboards.twitch.tv {
     tls unblock.crt unblock.key
-    reverse_proxy * https://104.16.51.111 https://104.16.52.111 https://104.16.53.111 https://104.16.54.111 https://104.16.55.111 {
+    reverse_proxy * https://dlifex0fg7ru9.cloudfront.net {
         lb_policy random
         transport http {
             tls
@@ -58,6 +74,329 @@ https://support.discordapp.com {
     }
 }
 
+https://vod-metro.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://d8t045al7vai0.cloudfront.net {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://music.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://d12b3e89c9703p.cloudfront.net {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://player.m7g.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://dnjmu7cm5xw9w.cloudfront.net {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://blog.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://d1x43om3304ey9.cloudfront.net {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://inspector.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://inspector-prod.us-west-2.elasticbeanstalk.com {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://stream.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://dhh9xuj2tu7k9.cloudfront.net {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://dev.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://d205b01qzi0xib.cloudfront.net {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://vod-secure.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://ds0h3roq6wcgc.cloudfront.net {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://extension-files.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://d36mepituis1gg.cloudfront.net {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+    }
+    header_up Host extension-files.twitch.tv
+    }
+}
+
+https://help.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://apply.cisabroad.com {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://brand.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://d2g064yykcu7rs.cloudfront.net {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://api.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://twitch.map.fastly.net {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://cvp.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://e9221.i.akamaiedge.net {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://gds-vhs-drops-campaign-images.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://d21oyt3pkiffdb.cloudfront.net {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://safety.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://accessibility.acapqa.net {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://player.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://twitch.map.fastly.net {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://us-west-2.uploads-regional.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://valkyrie-production.us-west-2.elasticbeanstalk.com {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+## Not Sure Below
+https://irc-ws.chat.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://52.35.166.107 https://44.239.239.44 https://52.24.78.67 https://44.240.169.208 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://irc-ws-r.chat.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://35.81.132.173 https://54.187.76.74 https://35.163.109.205 https://34.208.36.196 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://badges.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://35.83.89.92 https://52.35.100.154 https://34.213.33.129 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://spade.twitch.tv, https://trowel.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://science-edge-external-prod-73889260.us-west-2.elb.amazonaws.com {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://countess.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://countess-prod-public-176850629.us-west-2.elb.amazonaws.com {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://assets.help.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://13.227.66.62 https://13.227.66.55 https://13.227.66.75 https://13.227.66.17 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://passport.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://54.148.39.15 https://54.148.181.204 https://44.224.201.4 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://id.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://52.40.19.43 https://52.26.205.36 https://44.240.200.79 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://id-cdn.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://99.84.74.110 https://99.84.74.43 https://99.84.74.67 https://99.84.74.68 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://discuss.dev.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://54.69.226.84 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://ingest.twitch.tv {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://23.160.0.253 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://usher.ttvnw.net {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://192.108.239.254 https://23.160.0.254 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+# Twitch End
+
+# Pixiv Start
 https://pixiv.net, https://www.pixiv.net, https://ssl.pixiv.net, https://accounts.pixiv.net, https://touch.pixiv.net, https://oauth.secure.pixiv.net {
     tls unblock.crt unblock.key
     reverse_proxy * https://210.140.131.182 https://210.140.131.180 https://210.140.131.184 {
@@ -131,10 +470,12 @@ https://imgaz.pixiv.net, https://comic.pixiv.net, https://novel.pixiv.net, https
         }
     }
 }
+# Pixiv End
 
+# WikiPedia Start
 https://*.wikipedia.org, https://*.wikinews.org {
     tls unblock.crt unblock.key
-    reverse_proxy * https://208.80.154.224 {
+    reverse_proxy * https://103.102.166.224 {
         lb_policy random
         transport http {
             tls
@@ -145,7 +486,7 @@ https://*.wikipedia.org, https://*.wikinews.org {
 
 https://*.m.wikipedia.org, https://m.wikipedia.org {
     tls unblock.crt unblock.key
-    reverse_proxy * https://208.80.154.224 {
+    reverse_proxy * https://103.102.166.224 {
         lb_policy random
         transport http {
             tls
@@ -153,7 +494,9 @@ https://*.m.wikipedia.org, https://m.wikipedia.org {
         }
     }
 }
+# WikiPedia End
 
+# Tumblr Start
 https://tumblr.com, https://www.tumblr.com {
     tls unblock.crt unblock.key
     reverse_proxy * https://66.6.32.31 https://66.6.33.31 {
@@ -186,10 +529,12 @@ https://*.srvcs.tumblr.com {
         }
     }
 }
+# Tumblr End
 
+# Reddit Start
 https://reddit.com, https://*.reddit.com, https://redd.it, https://*.redd.it, https://*.redditmedia.com {
     tls unblock.crt unblock.key
-    reverse_proxy * https://151.101.193.140 https://151.101.129.140 https://151.101.65.140 {
+    reverse_proxy * https://reddit.map.fastly.net {
         lb_policy random
         transport http {
             tls
@@ -197,10 +542,12 @@ https://reddit.com, https://*.reddit.com, https://redd.it, https://*.redd.it, ht
         }
     }
 }
+# Reddit End
 
+# Imgur Start
 https://imgur.com, https://*.imgur.com {
     tls unblock.crt unblock.key
-    reverse_proxy * https://151.101.40.193 https://151.101.24.193 https://151.101.32.193 {
+    reverse_proxy * https://ipv4.imgur.map.fastly.net {
         lb_policy random
         transport http {
             tls
@@ -208,8 +555,10 @@ https://imgur.com, https://*.imgur.com {
         }
     }
 }
+# Imgur End
 
-https://*.instagram.com {
+# Instagram Start
+https://instagram.com, https://*.instagram.com {
     tls unblock.crt unblock.key
     reverse_proxy * https://157.240.11.174 https://157.240.13.174 https://157.240.15.174 https://157.240.25.174 {
         lb_policy random
@@ -219,10 +568,12 @@ https://*.instagram.com {
         }
     }
 }
+# Instagram End
 
-https://change.org, https://*.change.org {
+# OneDrive Start
+https://onedrive.live.com, https://skyapi.onedrive.live.com {
     tls unblock.crt unblock.key
-    reverse_proxy * https://104.16.4.13 https://104.16.5.13 {
+    reverse_proxy * https://a-0010.a-msedge.net {
         lb_policy random
         transport http {
             tls
@@ -230,32 +581,12 @@ https://change.org, https://*.change.org {
         }
     }
 }
+# OneDrive End
 
-https://onedrive.live.com {
-    tls unblock.crt unblock.key
-    reverse_proxy * https://13.107.42.13 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
-    }
-}
-
-https://skyapi.onedrive.live.com {
-    tls unblock.crt unblock.key
-    reverse_proxy * https://40.90.136.179 https://40.90.136.180 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
-    }
-}
-
+# PornHub Start
 https://pornhub.com, https://*.pornhub.com {
     tls unblock.crt unblock.key
-    reverse_proxy * https://66.254.114.41 {
+    reverse_proxy * https://66.254.114.41 https://66.254.114.189 {
         lb_policy random
         transport http {
             tls
@@ -263,7 +594,9 @@ https://pornhub.com, https://*.pornhub.com {
         }
     }
 }
+# PornHub End
 
+# Nyaa Start
 https://nyaa.si {
     tls unblock.crt unblock.key
     reverse_proxy * https://185.178.208.182 {
@@ -277,7 +610,7 @@ https://nyaa.si {
 
 https://sukebei.nyaa.si {
     tls unblock.crt unblock.key
-    reverse_proxy * https://185.221.200.12 {
+    reverse_proxy * https://198.251.89.38 {
         lb_policy random
         transport http {
             tls
@@ -285,7 +618,9 @@ https://sukebei.nyaa.si {
         }
     }
 }
+# Nyaa End
 
+# Mega Start
 https://mega.nz {
     tls unblock.crt unblock.key
     reverse_proxy * https://31.216.148.10 {
@@ -307,10 +642,12 @@ https://*.karere.mega.nz {
         }
     }
 }
+# Mega End
 
+# AO3 Start
 https://archiveofourown.org {
     tls unblock.crt unblock.key
-    reverse_proxy * https://104.153.64.122 {
+    reverse_proxy * https://104.153.64.122 https://208.85.241.152 {
         lb_policy random
         transport http {
             tls
@@ -318,10 +655,25 @@ https://archiveofourown.org {
         }
     }
 }
+# AO3 End
 
+# Change Start
+https://change.org, https://*.change.org {
+    tls unblock.crt unblock.key
+    reverse_proxy * https://104.17.88.51 https://104.17.89.51 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+# Change End
+
+# BandCamp Start
 https://bandcamp.com {
     tls unblock.crt unblock.key
-    reverse_proxy * https://151.101.193.28 {
+    reverse_proxy * https://bandcamp.map.fastly.net {
         lb_policy random
         transport http {
             tls
@@ -329,3 +681,10 @@ https://bandcamp.com {
         }
     }
 }
+# BandCamp Stop
+
+# Common Start
+:80 {
+    redir https://{host}{uri} temporary
+}
+# Common Stop
