@@ -17,10 +17,79 @@ https://steamcommunity.com, https://www.steamcommunity.com, https://cdn.steamcom
         health_timeout 30s
         transport http {
             tls
+            tls_insecure_skip_verify
         }
     }
 }
 # Steam End
+
+# Github Start
+https://*.github.com, https://github.io, https://*.github.io, https://githubusercontent.com, https://*.githubusercontent.com {
+    tls {
+        issuer internal {
+            lifetime 3650d
+            sign_with_root
+        }
+    }
+    reverse_proxy * https://github.map.fastly.net {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://github.com {
+    tls {
+        issuer internal {
+            lifetime 3650d
+            sign_with_root
+        }
+    }
+    reverse_proxy * https://140.82.113.3 https://140.82.113.4 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+# Github End
+
+# VSCode.dev Start
+https://vscode.dev, https://auth.vscode.dev, https://www.vscode.dev {
+    tls {
+        issuer internal {
+            lifetime 3650d
+            sign_with_root
+        }
+    }
+    reverse_proxy * https://13.107.213.70 https://13.107.246.70 {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://open.vscode.dev {
+    tls {
+        issuer internal {
+            lifetime 3650d
+            sign_with_root
+        }
+    }
+    reverse_proxy * https://salmon-tree-0c34e1c0f.azurestaticapps.net {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+# VSCode.dev End
 
 # Discord Start
 https://discord.com, https://*.discord.com {
@@ -482,7 +551,7 @@ https://passport.twitch.tv {
             sign_with_root
         }
     }
-    reverse_proxy * https://54.148.39.15 https://54.148.181.204 https://44.224.201.4 {
+    reverse_proxy * https://54.149.120.139 https://34.211.213.19 https://44.241.141.15 {
         lb_policy random
         transport http {
             tls
@@ -498,7 +567,7 @@ https://id.twitch.tv {
             sign_with_root
         }
     }
-    reverse_proxy * https://52.40.19.43 https://52.26.205.36 https://44.240.200.79 {
+    reverse_proxy * https://54.149.229.88 https://52.33.60.88 https://52.89.225.134 https://52.26.89.96 https://35.162.217.152 https://54.212.193.116 {
         lb_policy random
         transport http {
             tls
@@ -684,14 +753,14 @@ https://imgaz.pixiv.net, https://comic.pixiv.net, https://novel.pixiv.net, https
 # Pixiv End
 
 # WikiPedia Start
-https://*.wikipedia.org, https://*.wikinews.org {
+https://bits.wikimedia.org, https://upload.wikimedia.org {
     tls {
         issuer internal {
             lifetime 3650d
             sign_with_root
         }
     }
-    reverse_proxy * https://103.102.166.224 {
+    reverse_proxy * https://upload-lb.eqiad.wikimedia.org {
         lb_policy random
         transport http {
             tls
@@ -700,14 +769,14 @@ https://*.wikipedia.org, https://*.wikinews.org {
     }
 }
 
-https://*.m.wikipedia.org, https://m.wikipedia.org {
+https://wikipedia.org, https://*.wikipedia.org, https://wikinews.org, https://*.wikinews.org, https://m.wikipedia.org, https://*.m.wikipedia.org, https://wikimedia.org, https://*.wikimedia.org, https://mediawiki.org, https://*.mediawiki.org, https://wiktionary.org, https://*.wiktionary.org, https://wikisource.org, https://*.wikisource.org, https://wikiquote.org, https://*.wikiquote.org, https://wikibooks.org, https://*.wikibooks.org, https://wikidata.org, https://*.wikidata.org, https://wikimediafoundation.org, https://*.wikimediafoundation.org, https://wikiversity.org, https://*.wikiversity.org, https://wikivoyage.org, https://*.wikivoyage.org {
     tls {
         issuer internal {
             lifetime 3650d
             sign_with_root
         }
     }
-    reverse_proxy * https://103.102.166.224 {
+    reverse_proxy * https://text-lb.eqiad.wikimedia.org {
         lb_policy random
         transport http {
             tls
@@ -822,7 +891,7 @@ https://instagram.com, https://*.instagram.com {
 # Instagram End
 
 # OneDrive Start
-https://onedrive.live.com, https://skyapi.onedrive.live.com {
+https://onedrive.live.com {
     tls {
         issuer internal {
             lifetime 3650d
@@ -830,6 +899,22 @@ https://onedrive.live.com, https://skyapi.onedrive.live.com {
         }
     }
     reverse_proxy * https://a-0010.a-msedge.net {
+        lb_policy random
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+https://skyapi.onedrive.live.com {
+    tls {
+        issuer internal {
+            lifetime 3650d
+            sign_with_root
+        }
+    }
+    reverse_proxy * https://40.90.133.99 https://40.90.136.20 https://40.90.130.203 https://13.104.208.165 https://131.253.14.230 {
         lb_policy random
         transport http {
             tls
