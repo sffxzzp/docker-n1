@@ -3,312 +3,195 @@
     ocsp_stapling off
 }
 
-# Steam Start
-https://steamcommunity.com, https://www.steamcommunity.com, https://cdn.steamcommunity.com, https://store.steampowered.com, https://api.steampowered.com {
+(sign) {
     tls {
         issuer internal {
-            lifetime 3650d
-            sign_with_root
+            lifetime 7d
         }
+        on_demand
     }
+}
+
+(rev) {
+    lb_policy random
+    transport http {
+        tls
+        tls_insecure_skip_verify
+    }
+}
+
+172.22.22.22 192.168.1.152 raspberrypi 127.0.0.1 http://raspi.kanojo.ml {
+    import sign
+    handle /jsonrpc* {
+        reverse_proxy * http://127.0.0.1:56800
+    }
+    handle_path /asf* {
+        reverse_proxy * http://127.0.0.1:65348
+    }
+    handle_path /usb* {
+        encode zstd gzip
+        root ../Storage
+        file_server browse
+    }
+    #handle_path /disk* {
+    #    encode zstd gzip
+    #    root ../Disk
+    #    file_server browse
+    #}
+    handle {
+        encode zstd gzip
+        root ariang
+        file_server browse
+    }
+}
+
+172.22.22.22:6800 192.168.1.152:6800 raspberrypi:6800 127.0.0.1:6800 {
+    import sign
+    handle /jsonrpc* {
+        reverse_proxy * http://127.0.0.1:56800
+    }
+}
+
+# Steam Start
+https://steamcommunity.com, https://www.steamcommunity.com, https://cdn.steamcommunity.com, https://store.steampowered.com, https://api.steampowered.com {
+    import sign
     reverse_proxy * https://steamuserimages-a.akamaihd.net https://steamstore-a.akamaihd.net https://steamcommunity-a.akamaihd.net https://steampipe.akamaized.net https://eaassets-a.akamaihd.net {
-        lb_policy random
+        import rev
         fail_duration 10s
         health_timeout 30s
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
     }
 }
 # Steam End
 
 # Github Start
 https://*.github.com, https://github.io, https://*.github.io, https://githubusercontent.com, https://*.githubusercontent.com {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://github.map.fastly.net {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
-https://github.com {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
+https://gist.github.com https://github.com {
+    import sign
+    reverse_proxy * https://140.82.113.3 https://140.82.113.4 https://20.205.243.166 https://20.27.177.113 {
+        import rev
     }
-    reverse_proxy * https://140.82.113.3 https://140.82.113.4 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+}
+
+https://github {
+    import sign
+    reverse_proxy * https://140.82.113.3 https://140.82.113.4 https://20.205.243.166 https://20.27.177.113 {
+        import rev
+        header_up Host github.com
     }
 }
 # Github End
 
 # VSCode.dev Start
 https://vscode.dev, https://auth.vscode.dev, https://www.vscode.dev {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://13.107.213.70 https://13.107.246.70 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://open.vscode.dev {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://salmon-tree-0c34e1c0f.azurestaticapps.net {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 # VSCode.dev End
 
 # Discord Start
-https://discord.com, https://*.discord.com {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
-    reverse_proxy * https://162.159.135.232 https://162.159.136.232 https://162.159.137.232 https://162.159.138.232 https://162.159.128.233 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+https://discord.com, https://*.discord.com, https://*.discordapp.net {
+    import sign
+    reverse_proxy * https://162.159.137.232 https://162.159.136.232 https://162.159.135.232 https://162.159.138.232 https://162.159.128.233 {
+        import rev
     }
 }
 
 https://discordapp.com, https://*.discordapp.com {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
-    reverse_proxy * https://162.159.130.233 https://162.159.133.233 https://162.159.134.233 https://162.159.135.233 https://162.159.129.233 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
-    }
-}
-
-https://*.discordapp.net {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
-    reverse_proxy * https://162.159.130.232 https://162.159.133.232 https://162.159.134.232 https://162.159.128.232 https://162.159.129.232 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+    import sign
+    reverse_proxy * https://162.159.133.233 https://162.159.134.233 https://162.159.135.233 https://162.159.129.233 https://162.159.130.233 {
+        import rev
     }
 }
 # Discord End
 
 # Twitch Start
-https://twitch.tv https://www.twitch.tv https://m.twitch.tv https://app.twitch.tv https://clips.twitch.tv https://gql.twitch.tv https://dashboard.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
-    reverse_proxy * https://twitch.map.fastly.net {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+https://twitch.tv https://www.twitch.tv https://m.twitch.tv https://app.twitch.tv https://clips.twitch.tv https://gql.twitch.tv https://dashboard.twitch.tv https://api.twitch.tv https://player.twitch.tv {
+    import sign
+    reverse_proxy * https://151.101.78.167 https://199.232.46.167 https://151.101.110.167 https://146.75.122.167 https://151.101.26.167 https://199.232.150.167 https://146.75.94.167 https://151.101.30.167 https://151.101.242.167 https://twitch.map.fastly.net {
+        import rev
     }
 }
 
 https://vod-storyboards.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://dlifex0fg7ru9.cloudfront.net {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://vod-metro.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://d8t045al7vai0.cloudfront.net {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://music.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://d12b3e89c9703p.cloudfront.net {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://player.m7g.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://dnjmu7cm5xw9w.cloudfront.net {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://blog.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://d1x43om3304ey9.cloudfront.net {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://inspector.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://inspector-prod.us-west-2.elasticbeanstalk.com {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://stream.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://dhh9xuj2tu7k9.cloudfront.net {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://dev.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://d205b01qzi0xib.cloudfront.net {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://vod-secure.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://ds0h3roq6wcgc.cloudfront.net {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://extension-files.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://d36mepituis1gg.cloudfront.net {
         lb_policy random
         transport http {
@@ -320,752 +203,488 @@ https://extension-files.twitch.tv {
 }
 
 https://help.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://apply.cisabroad.com {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://brand.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://d2g064yykcu7rs.cloudfront.net {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
-    }
-}
-
-https://api.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
-    reverse_proxy * https://twitch.map.fastly.net {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://cvp.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://e9221.i.akamaiedge.net {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://gds-vhs-drops-campaign-images.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://d21oyt3pkiffdb.cloudfront.net {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://safety.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://accessibility.acapqa.net {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
-    }
-}
-
-https://player.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
-    reverse_proxy * https://twitch.map.fastly.net {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://us-west-2.uploads-regional.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://valkyrie-production.us-west-2.elasticbeanstalk.com {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 ## Not Sure Below
-https://irc-ws.chat.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
-    reverse_proxy * https://52.35.166.107 https://44.239.239.44 https://52.24.78.67 https://44.240.169.208 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
-    }
-}
-
-https://irc-ws-r.chat.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
-    reverse_proxy * https://35.81.132.173 https://54.187.76.74 https://35.163.109.205 https://34.208.36.196 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+https://irc-ws.chat.twitch.tv https://irc-ws-r.chat.twitch.tv {
+    import sign
+    reverse_proxy * https://44.233.76.12 https://44.240.2.193 https://18.236.41.170 https://100.21.208.45 {
+        import rev
     }
 }
 
 https://badges.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://35.83.89.92 https://52.35.100.154 https://34.213.33.129 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://spade.twitch.tv, https://trowel.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://science-edge-external-prod-73889260.us-west-2.elb.amazonaws.com {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://countess.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://countess-prod-public-176850629.us-west-2.elb.amazonaws.com {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://assets.help.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://13.227.66.62 https://13.227.66.55 https://13.227.66.75 https://13.227.66.17 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://passport.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
-    reverse_proxy * https://54.149.120.139 https://34.211.213.19 https://44.241.141.15 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+    import sign
+    reverse_proxy * https://c3ad68a16f66bff24e2d82595bd240a1.steam302.xyz {
+        import rev
     }
 }
 
 https://id.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
-    reverse_proxy * https://54.149.229.88 https://52.33.60.88 https://52.89.225.134 https://52.26.89.96 https://35.162.217.152 https://54.212.193.116 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+    import sign
+    reverse_proxy * https://44.230.127.5 https://44.241.172.68 https://54.214.252.124 {
+    # https://2973c6ca0e111662ed293b57dbae9fbf.steam302.xyz {
+        import rev
     }
 }
 
 https://id-cdn.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://99.84.74.110 https://99.84.74.43 https://99.84.74.67 https://99.84.74.68 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://discuss.dev.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://54.69.226.84 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://ingest.twitch.tv {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://23.160.0.253 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://usher.ttvnw.net {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://192.108.239.254 https://23.160.0.254 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 # Twitch End
 
 # Pixiv Start
 https://pixiv.net, https://www.pixiv.net, https://ssl.pixiv.net, https://accounts.pixiv.net, https://touch.pixiv.net, https://oauth.secure.pixiv.net {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://210.140.131.182 https://210.140.131.180 https://210.140.131.184 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://i.pximg.net {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://210.140.92.135 https://210.140.92.136 https://210.140.92.137 https://210.140.92.139 https://210.140.92.140 https://210.140.92.141 https://210.140.92.142 https://210.140.92.143 https://210.140.92.144 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://sketch.pixiv.net {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://210.140.174.37 https://210.140.170.179 https://210.140.175.130 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy /ws* https://210.140.174.37 https://210.140.170.179 https://210.140.175.130 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://factory.pixiv.net {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://210.140.131.180 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://dic.pixiv.net, https://en-dic.pixiv.net, https://sensei.pixiv.net, https://fanbox.pixiv.net, https://payment.pixiv.net {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://210.140.131.222 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://imgaz.pixiv.net, https://comic.pixiv.net, https://novel.pixiv.net, https://source.pixiv.net, https://i1.pixiv.net, https://i2.pixiv.net, https://i3.pixiv.net, https://i4.pixiv.net {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://210.140.131.144 https://210.140.131.145 https://210.140.131.147 https://210.140.131.153 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 # Pixiv End
 
 # WikiPedia Start
 https://bits.wikimedia.org, https://upload.wikimedia.org {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://upload-lb.eqiad.wikimedia.org {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://wikipedia.org, https://*.wikipedia.org, https://wikinews.org, https://*.wikinews.org, https://m.wikipedia.org, https://*.m.wikipedia.org, https://wikimedia.org, https://*.wikimedia.org, https://mediawiki.org, https://*.mediawiki.org, https://wiktionary.org, https://*.wiktionary.org, https://wikisource.org, https://*.wikisource.org, https://wikiquote.org, https://*.wikiquote.org, https://wikibooks.org, https://*.wikibooks.org, https://wikidata.org, https://*.wikidata.org, https://wikimediafoundation.org, https://*.wikimediafoundation.org, https://wikiversity.org, https://*.wikiversity.org, https://wikivoyage.org, https://*.wikivoyage.org {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://text-lb.eqiad.wikimedia.org {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 # WikiPedia End
 
 # Tumblr Start
 https://tumblr.com, https://www.tumblr.com {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://66.6.32.31 https://66.6.33.31 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://*.media.tumblr.com, https://assets.tumblr.com {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://152.199.38.136 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://*.srvcs.tumblr.com {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://119.161.14.20 https://119.161.16.14 https://119.161.14.19 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 # Tumblr End
 
 # Reddit Start
 https://reddit.com, https://*.reddit.com, https://redd.it, https://*.redd.it, https://*.redditmedia.com {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
-    reverse_proxy * https://reddit.map.fastly.net {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+    import sign
+    reverse_proxy * https://151.101.245.140 https://151.101.81.140 https://199.232.213.140 https://199.232.173.140 {
+        import rev
     }
 }
 # Reddit End
 
 # Imgur Start
 https://imgur.com, https://*.imgur.com {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://ipv4.imgur.map.fastly.net {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 # Imgur End
 
 # Instagram Start
 https://instagram.com, https://*.instagram.com {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://157.240.11.174 https://157.240.13.174 https://157.240.15.174 https://157.240.25.174 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 # Instagram End
 
 # OneDrive Start
 https://onedrive.live.com {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://a-0010.a-msedge.net {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://skyapi.onedrive.live.com {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://40.90.133.99 https://40.90.136.20 https://40.90.130.203 https://13.104.208.165 https://131.253.14.230 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 # OneDrive End
 
 # PornHub Start
 https://pornhub.com, https://*.pornhub.com {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
+    import sign
+    reverse_proxy * https://216.18.168.15 https://216.18.168.16 {
+        import rev
     }
-    reverse_proxy * https://66.254.114.41 https://66.254.114.189 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+}
+https://phncdn.com, https://*.phncdn.com {
+    import sign
+    reverse_proxy * https://ei.phncdn.com.sds.rncdn7.com https://di.phncdn.com.sds.rncdn7.com {
+        import rev
     }
 }
 # PornHub End
 
 # Nyaa Start
 https://nyaa.si {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://185.178.208.182 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 
 https://sukebei.nyaa.si {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://198.251.89.38 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 # Nyaa End
 
 # Mega Start
 https://mega.nz {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://31.216.145.5 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
+    }
+}
+
+https://g.api.mega.co.nz {
+    import sign
+    reverse_proxy * https://66.203.125.15 https://66.203.125.14 https://66.203.125.12 https://66.203.125.13 https://66.203.125.11 {
+        import rev
     }
 }
 
 https://*.karere.mega.nz {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://31.216.147.155 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 # Mega End
 
 # AO3 Start
 https://archiveofourown.org {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://104.153.64.122 https://208.85.241.152 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 # AO3 End
 
 # Change Start
 https://change.org, https://*.change.org {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
+    import sign
     reverse_proxy * https://104.17.88.51 https://104.17.89.51 {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+        import rev
     }
 }
 # Change End
 
 # BandCamp Start
-https://bandcamp.com {
-    tls {
-        issuer internal {
-            lifetime 3650d
-            sign_with_root
-        }
-    }
-    reverse_proxy * https://bandcamp.map.fastly.net {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
+https://*.bcbits.com {
+    import sign
+    reverse_proxy * https://j.sni.global.fastly.net {
+        import rev
     }
 }
-# BandCamp Stop
+https://popplers5.bandcamp.com {
+    import sign
+    reverse_proxy * https://34.70.96.189 https://35.227.87.20 https://34.73.198.91 https://104.197.207.128 {
+        import rev
+    }
+}
+https://bandcamp.com, https://*.bandcamp.com {
+    import sign
+    reverse_proxy * https://bandcamp.map.fastly.net {
+        import rev
+    }
+}
+# BandCamp End
+
+# V2EX Start
+https://v2ex.com, https://*.v2ex.com {
+    import sign
+    reverse_proxy * https://104.20.9.218 https://104.20.10.218 https://172.67.3.188 {
+        import rev
+    }
+}
+# V2EX End
+
+# Storj Start
+https://storj.io https://www.storj.io {
+    import sign
+    reverse_proxy * https://34.120.119.150 {
+        import rev
+    }
+}
+
+https://us1.storj.io {
+    import sign
+    reverse_proxy * https://35.237.247.129 https://34.132.102.66 https://34.150.150.5 {
+        import rev
+    }
+}
+
+https://ap1.storj.io {
+    import sign
+    reverse_proxy * https://35.221.198.23 https://34.92.23.134 https://35.189.153.112 {
+        import rev
+    }
+}
+
+https://eu1.storj.io {
+    import sign
+    reverse_proxy * https://34.78.237.157 https://35.242.215.202 https://35.246.98.80 {
+        import rev
+    }
+}
+# Storj End
+
+# Tor Start
+https://*.torproject.org https://torproject.org {
+    import sign
+    reverse_proxy * https://158.69.113.194 https://158.69.113.215 https://95.216.163.36 https://116.202.120.165 https://116.202.120.166 {
+        import rev
+    }
+}
+
+https://bridges.torproject.org {
+    import sign
+    reverse_proxy * https://116.202.120.184 {
+        import rev
+    }
+}
+
+https://check.torproject.org {
+    import sign
+    reverse_proxy * https://116.202.120.181 {
+        import rev
+    }
+}
+
+https://dist.torproject.org {
+    import sign
+    reverse_proxy * https://158.69.113.215 https://116.202.120.165 https://116.202.120.166 https://158.69.113.194 {
+        import rev
+    }
+}
+# Tor End
+
+# Proton Start
+https://proton.me https://*.proton.me {
+    import sign
+    reverse_proxy * https://185.70.42.45 {
+        import rev
+    }
+}
+
+https://account.proton.me {
+    import sign
+    reverse_proxy * https://185.70.42.36 {
+        import rev
+    }
+}
+
+https://mail.proton.me {
+    import sign
+    reverse_proxy * https://185.70.42.37 {
+        import rev
+    }
+}
+
+https://calendar.proton.me {
+    import sign
+    reverse_proxy * https://185.70.42.39 {
+        import rev
+    }
+}
+
+https://drive.proton.me {
+    import sign
+    reverse_proxy * https://185.70.42.40 {
+        import rev
+    }
+}
+
+https://account-api.proton.me {
+    import sign
+    reverse_proxy * https://185.70.42.41 {
+        import rev
+    }
+}
+# Proton End
+
+# ZLibrary Start
+https://1lib.tw https://*.1lib.tw {
+    import sign
+    reverse_proxy * https://89.248.168.48 {
+        import rev
+    }
+}
+
+https://singlelogin.me https://*.singlelogin.me {
+    import sign
+    reverse_proxy * https://81.17.27.244 {
+        import rev
+    }
+}
+
+https://booklist.is https://*.booklist.is {
+    import sign
+    reverse_proxy * https://141.255.165.74 {
+        import rev
+    }
+}
+# ZLibrary End
 
 # Common Start
 :80 {
     redir https://{host}{uri} temporary
 }
-# Common Stop
+# Common End
