@@ -20,7 +20,7 @@ caddy-rev
 Linux 根证书存储位置（防止你需要多端信任）：
 `~/.local/share/caddy/pki/authorities/local`
 
-安卓添加根证书（没弄成，但还是写一下）：
+安卓添加根证书（Caddy 使用根证书签名会导致无效，正常使用证书链签名即正常，且 Caddy v2.6.3 之后支持修改 intermediate 证书的时长，可以超过 7 天）：
 ``` plain_text
 将根证书按输出的 hash 重命名为 .0 后缀
 openssl x509 -inform PEM -subject_hash_old -in root.crt
