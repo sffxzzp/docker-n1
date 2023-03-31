@@ -1,14 +1,20 @@
 {
     local_certs
     ocsp_stapling off
+    pki {
+        ca {
+            # only available after caddy v2.6.3
+            intermediate_lifetime 1800d
+        }
+    }
 }
 
 (sign) {
     tls {
         issuer internal {
-            lifetime 7d
+            lifetime 1800d
         }
-        on_demand
+        # on_demand
     }
 }
 
@@ -20,7 +26,7 @@
     }
 }
 
-172.22.22.22 192.168.1.152 raspberrypi 127.0.0.1 http://raspi.kanojo.ml {
+172.22.22.22 http://192.168.1.152 raspberrypi 127.0.0.1 http://raspi.kanojo.ml {
     import sign
     handle /jsonrpc* {
         reverse_proxy * http://127.0.0.1:56800
@@ -55,7 +61,7 @@
 # Steam Start
 https://steamcommunity.com, https://www.steamcommunity.com, https://cdn.steamcommunity.com, https://store.steampowered.com, https://api.steampowered.com {
     import sign
-    reverse_proxy * https://steamuserimages-a.akamaihd.net https://steamstore-a.akamaihd.net https://steamcommunity-a.akamaihd.net https://steampipe.akamaized.net https://eaassets-a.akamaihd.net {
+    reverse_proxy * https://steamuserimages-a.akamaihd.net https://eaassets-a.akamaihd.net https://steamstore-a.akamaihd.net https://steampipe.akamaized.net https://steamcommunity-a.akamaihd.net {
         import rev
         fail_duration 10s
         health_timeout 30s
@@ -289,7 +295,7 @@ https://passport.twitch.tv {
 
 https://id.twitch.tv {
     import sign
-    reverse_proxy * https://44.230.127.5 https://44.241.172.68 https://54.214.252.124 {
+    reverse_proxy * https://44.231.119.189 https://44.236.90.232 https://35.80.166.18 {
     # https://2973c6ca0e111662ed293b57dbae9fbf.steam302.xyz {
         import rev
     }
@@ -661,13 +667,6 @@ https://account-api.proton.me {
 # Proton End
 
 # ZLibrary Start
-https://1lib.tw https://*.1lib.tw {
-    import sign
-    reverse_proxy * https://89.248.168.48 {
-        import rev
-    }
-}
-
 https://singlelogin.me https://*.singlelogin.me {
     import sign
     reverse_proxy * https://81.17.27.244 {
@@ -682,6 +681,15 @@ https://booklist.is https://*.booklist.is {
     }
 }
 # ZLibrary End
+
+# ChatGPT Start
+https://chat.openai.com {
+    import sign
+    reverse_proxy * https://104.18.2.161 https://104.18.3.161 {
+        import rev
+    }
+}
+# ChatGPT End
 
 # Common Start
 :80 {
