@@ -12,7 +12,8 @@
 (sign) {
     tls {
         issuer internal {
-            lifetime 1800d
+            # should not longer than 1 year
+            lifetime 360d
         }
         # on_demand
     }
