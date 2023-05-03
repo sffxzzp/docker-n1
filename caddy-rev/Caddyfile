@@ -668,16 +668,9 @@ https://account-api.proton.me {
 # Proton End
 
 # ZLibrary Start
-https://singlelogin.me https://*.singlelogin.me {
+https://singlelogin.me https://*.singlelogin.me https://*.resist.tel https://*.carbon.pm https://*.thanks.sbs {
     import sign
-    reverse_proxy * https://81.17.27.244 {
-        import rev
-    }
-}
-
-https://booklist.is https://*.booklist.is {
-    import sign
-    reverse_proxy * https://141.255.165.74 {
+    reverse_proxy * https://195.66.210.33 {
         import rev
     }
 }
