@@ -12,7 +12,6 @@
 (sign) {
     tls {
         issuer internal {
-            # should not longer than 1 year
             lifetime 360d
         }
         # on_demand
@@ -20,14 +19,14 @@
 }
 
 (rev) {
-    lb_policy random
+    lb_policy round_robin
     transport http {
         tls
         tls_insecure_skip_verify
     }
 }
 
-172.22.22.22 http://192.168.1.152 raspberrypi 127.0.0.1 http://raspi.kanojo.ml {
+172.22.22.22 http://192.168.1.152 raspberrypi http://100.88.50.6 raspi 127.0.0.1 http://raspi.kanojo.ml {
     import sign
     handle /jsonrpc* {
         reverse_proxy * http://127.0.0.1:56800
@@ -52,7 +51,7 @@
     }
 }
 
-172.22.22.22:6800 192.168.1.152:6800 raspberrypi:6800 127.0.0.1:6800 {
+172.22.22.22:6800 192.168.1.152:6800 raspberrypi:6800 100.88.50.6:6800 raspi:6800 127.0.0.1:6800 {
     import sign
     handle /jsonrpc* {
         reverse_proxy * http://127.0.0.1:56800
@@ -60,9 +59,9 @@
 }
 
 # Steam Start
-https://steamcommunity.com, https://www.steamcommunity.com, https://cdn.steamcommunity.com, https://store.steampowered.com, https://api.steampowered.com {
+https://steamcommunity.com, https://www.steamcommunity.com, https://cdn.steamcommunity.com, https://store.steampowered.com, https://api.steampowered.com, https://checkout.steampowered.com {
     import sign
-    reverse_proxy * https://steamuserimages-a.akamaihd.net https://eaassets-a.akamaihd.net https://steamstore-a.akamaihd.net https://steampipe.akamaized.net https://steamcommunity-a.akamaihd.net {
+    reverse_proxy * https://steamuserimages-a.akamaihd.net.edgesuite.net https://steamstore-a.akamaihd.net.edgesuite.net https://eaassets-a.akamaihd.net.edgesuite.net https://steamcommunity-a.akamaihd.net.edgesuite.net {
         import rev
         fail_duration 10s
         health_timeout 30s
@@ -71,16 +70,23 @@ https://steamcommunity.com, https://www.steamcommunity.com, https://cdn.steamcom
 # Steam End
 
 # Github Start
-https://*.github.com, https://github.io, https://*.github.io, https://githubusercontent.com, https://*.githubusercontent.com {
+https://docs.github.com, https://github.io, https://*.github.io, https://githubusercontent.com, https://*.githubusercontent.com {
     import sign
     reverse_proxy * https://github.map.fastly.net {
         import rev
     }
 }
 
-https://gist.github.com https://github.com {
+https://gist.github.com, https://github.com {
     import sign
     reverse_proxy * https://140.82.113.3 https://140.82.113.4 https://20.205.243.166 https://20.27.177.113 {
+        import rev
+    }
+}
+
+https://*.github.com {
+    import sign
+    reverse_proxy * https://140.82.114.5 https://140.82.114.6 https://20.205.243.168 https://20.207.73.85 {
         import rev
     }
 }
@@ -110,8 +116,33 @@ https://open.vscode.dev {
 }
 # VSCode.dev End
 
+# Docker Hub Start
+https://hub.docker.com {
+    import sign
+    reverse_proxy * https://54.156.140.159 https://44.221.37.199 https://52.44.227.212 https://31.13.88.26 https://104.244.46.71 {
+        import rev
+    }
+}
+# Docker Hub End
+
+# Archive.org Start
+https://web.archive.org {
+    import sign
+    reverse_proxy * https://207.241.237.3 {
+        import rev
+    }
+}
+
+https://*.archive.org, https://archive.org {
+    import sign
+    reverse_proxy * https://207.241.224.2 {
+        import rev
+    }
+}
+# Archive.org End
+
 # Discord Start
-https://discord.com, https://*.discord.com, https://*.discordapp.net {
+https://discord.com, https://*.discord.com, https://*.discordapp.net, https://*.discord.gg, https://discord.gg {
     import sign
     reverse_proxy * https://162.159.137.232 https://162.159.136.232 https://162.159.135.232 https://162.159.138.232 https://162.159.128.233 {
         import rev
@@ -127,10 +158,25 @@ https://discordapp.com, https://*.discordapp.com {
 # Discord End
 
 # Twitch Start
-https://twitch.tv https://www.twitch.tv https://m.twitch.tv https://app.twitch.tv https://clips.twitch.tv https://gql.twitch.tv https://dashboard.twitch.tv https://api.twitch.tv https://player.twitch.tv {
+https://twitch.tv, https://www.twitch.tv, https://m.twitch.tv, https://app.twitch.tv, https://clips.twitch.tv, https://gql.twitch.tv, https://dashboard.twitch.tv, https://api.twitch.tv, https://player.twitch.tv {
     import sign
     reverse_proxy * https://151.101.78.167 https://199.232.46.167 https://151.101.110.167 https://146.75.122.167 https://151.101.26.167 https://199.232.150.167 https://146.75.94.167 https://151.101.30.167 https://151.101.242.167 https://twitch.map.fastly.net {
         import rev
+    }
+}
+
+https://*.pdx01.abs.hls.ttvnw.net {
+    import sign
+    reverse_proxy https://science-edge-external-prod-73889260.us-west-2.elb.amazonaws.com {
+        import rev
+    }
+}
+
+https://assets.twitch.tv {
+    import sign
+    reverse_proxy * https://static.twitchcdn.net {
+        import rev
+        header_up Host static.twitchcdn.net
     }
 }
 
@@ -200,12 +246,8 @@ https://vod-secure.twitch.tv {
 https://extension-files.twitch.tv {
     import sign
     reverse_proxy * https://d36mepituis1gg.cloudfront.net {
-        lb_policy random
-        transport http {
-            tls
-            tls_insecure_skip_verify
-    }
-    header_up Host extension-files.twitch.tv
+        import rev
+        header_up Host extension-files.twitch.tv
     }
 }
 
@@ -252,13 +294,6 @@ https://us-west-2.uploads-regional.twitch.tv {
 }
 
 ## Not Sure Below
-https://irc-ws.chat.twitch.tv https://irc-ws-r.chat.twitch.tv {
-    import sign
-    reverse_proxy * https://44.233.76.12 https://44.240.2.193 https://18.236.41.170 https://100.21.208.45 {
-        import rev
-    }
-}
-
 https://badges.twitch.tv {
     import sign
     reverse_proxy * https://35.83.89.92 https://52.35.100.154 https://34.213.33.129 {
@@ -296,7 +331,7 @@ https://passport.twitch.tv {
 
 https://id.twitch.tv {
     import sign
-    reverse_proxy * https://44.231.119.189 https://44.236.90.232 https://35.80.166.18 {
+    reverse_proxy * https://34.211.178.109 https://54.148.215.113 https://52.11.246.151 {
     # https://2973c6ca0e111662ed293b57dbae9fbf.steam302.xyz {
         import rev
     }
@@ -319,13 +354,6 @@ https://discuss.dev.twitch.tv {
 https://ingest.twitch.tv {
     import sign
     reverse_proxy * https://23.160.0.253 {
-        import rev
-    }
-}
-
-https://usher.ttvnw.net {
-    import sign
-    reverse_proxy * https://192.108.239.254 https://23.160.0.254 {
         import rev
     }
 }
@@ -377,6 +405,15 @@ https://imgaz.pixiv.net, https://comic.pixiv.net, https://novel.pixiv.net, https
         import rev
     }
 }
+
+https://i.pixiv.cat {
+    import sign
+    reverse_proxy * https://210.140.139.130 https://210.140.139.136 https://210.140.139.129 https://210.140.139.133 https://210.140.139.134 https://210.140.139.135 https://210.140.139.132 https://210.140.139.131 {
+        import rev
+        header_up Host i.pximg.net
+        header_up Referer https://www.pixiv.net
+    }
+}
 # Pixiv End
 
 # WikiPedia Start
@@ -419,9 +456,15 @@ https://*.srvcs.tumblr.com {
 # Tumblr End
 
 # Reddit Start
-https://reddit.com, https://*.reddit.com, https://redd.it, https://*.redd.it, https://*.redditmedia.com {
+https://reddit.com, https://*.reddit.com {
     import sign
-    reverse_proxy * https://151.101.245.140 https://151.101.81.140 https://199.232.213.140 https://199.232.173.140 {
+    reverse_proxy * https://reddit.map.fastly.net {
+        import rev
+    }
+}
+https://redd.it, https://*.redd.it, https://www.redditstatic.com, https://*.redditmedia.com {
+    import sign
+    reverse_proxy * https://dualstack.reddit.map.fastly.net {
         import rev
     }
 }
@@ -513,6 +556,13 @@ https://*.karere.mega.nz {
         import rev
     }
 }
+
+https://*.static.mega.co.nz https://mega.io {
+    import sign
+    reverse_proxy * https://66.203.127.11 https://89.44.169.134 https://66.203.127.13 {
+        import rev
+    }
+}
 # Mega End
 
 # AO3 Start
@@ -563,35 +613,23 @@ https://v2ex.com, https://*.v2ex.com {
 }
 # V2EX End
 
-# Storj Start
-https://storj.io https://www.storj.io {
+# DuckDuckGo Start
+https://duckduckgo.com https://*.duckduckgo.com {
     import sign
-    reverse_proxy * https://34.120.119.150 {
+    reverse_proxy * https://52.149.246.39 https://40.89.244.232 https://52.142.124.215 https://40.114.177.156 {
         import rev
     }
 }
+# DuckDuckGo End
 
-https://us1.storj.io {
+# APKMirror Start
+https://apkmirror.com https://*.apkmirror.com {
     import sign
-    reverse_proxy * https://35.237.247.129 https://34.132.102.66 https://34.150.150.5 {
+    reverse_proxy * https://104.19.132.58 https://104.19.134.58 https://104.19.136.58 https://104.19.133.58 https://104.19.135.58 {
         import rev
     }
 }
-
-https://ap1.storj.io {
-    import sign
-    reverse_proxy * https://35.221.198.23 https://34.92.23.134 https://35.189.153.112 {
-        import rev
-    }
-}
-
-https://eu1.storj.io {
-    import sign
-    reverse_proxy * https://34.78.237.157 https://35.242.215.202 https://35.246.98.80 {
-        import rev
-    }
-}
-# Storj End
+# APKMirror End
 
 # Tor Start
 https://*.torproject.org https://torproject.org {
@@ -668,22 +706,22 @@ https://account-api.proton.me {
 # Proton End
 
 # ZLibrary Start
-https://singlelogin.me https://*.singlelogin.me https://*.resist.tel https://*.carbon.pm https://*.thanks.sbs {
+https://singlelogin.me, https://*.singlelogin.me, https://singlelogin.se, https://*.singlelogin.se, https://z-library.se, https://*.z-library.se, https://*.resist.tel, https://*.carbon.pm, https://*.thanks.sbs {
     import sign
-    reverse_proxy * https://195.66.210.33 {
+    reverse_proxy * https://195.66.210.33 https://176.123.7.105 {
         import rev
     }
 }
 # ZLibrary End
 
-# ChatGPT Start
-https://chat.openai.com {
+# HuggingFace Start
+https://hf.space, https://*.hf.space {
     import sign
-    reverse_proxy * https://104.18.2.161 https://104.18.3.161 {
+    reverse_proxy * https://54.211.190.56 https://18.209.42.97 https://18.215.194.14 https://18.209.42.97 {
         import rev
     }
 }
-# ChatGPT End
+# HuggingFace End
 
 # Common Start
 :80 {
