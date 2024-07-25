@@ -604,15 +604,6 @@ https://bandcamp.com, https://*.bandcamp.com {
 }
 # BandCamp End
 
-# V2EX Start
-https://v2ex.com, https://*.v2ex.com {
-    import sign
-    reverse_proxy * https://104.20.9.218 https://104.20.10.218 https://172.67.3.188 {
-        import rev
-    }
-}
-# V2EX End
-
 # DuckDuckGo Start
 https://duckduckgo.com https://*.duckduckgo.com {
     import sign
@@ -715,6 +706,115 @@ https://singlelogin.me, https://*.singlelogin.me, https://singlelogin.se, https:
 # ZLibrary End
 
 # HuggingFace Start
+https://huggingface.co, https://www.huggingface.co, https://datasets-server.huggingface.co, https://cdn-thumbnails.huggingface.co, https://transformer.huggingface.co, https://transformers.huggingface.co, https://cdn-avatars.huggingface.co {
+    import sign
+    reverse_proxy https://d3q5pwvs88w1av.cloudfront.net {
+        import rev
+    }
+}
+
+https://cdn-lfs-us-1.huggingface.co {
+    import sign
+    reverse_proxy https://d3tt2suyqs9zqv.cloudfront.net {
+        import rev
+    }
+}
+
+https://cdn-uploads.huggingface.co {
+    import sign
+    reverse_proxy https://d1cylya5vv74ss.cloudfront.net {
+        import rev
+    }
+}
+
+https://cdn-lfs-eu-1.huggingface.co {
+    import sign
+    reverse_proxy https://d1wmdo6fswuln8.cloudfront.net {
+        import rev
+    }
+}
+
+https://convai.huggingface.co {
+    import sign
+    reverse_proxy https://d1cnjqbqjby1vq.cloudfront.net {
+        import rev
+    }
+}
+
+https://cdn-lfs.huggingface.co {
+    import sign
+    reverse_proxy https://d2243ylfu57tc6.cloudfront.net {
+        import rev
+    }
+}
+
+https://cdn.huggingface.co {
+    import sign
+    reverse_proxy https://d2ws9o8vfrpkyk.cloudfront.net {
+        import rev
+    }
+}
+
+https://cdn-datasets.huggingface.co {
+    import sign
+    reverse_proxy https://d36easquyfvmrn.cloudfront.net {
+        import rev
+    }
+}
+
+https://discuss.huggingface.co {
+    import sign
+    reverse_proxy https://hellohellohello.hosted-by-discourse.com {
+        import rev
+    }
+}
+
+https://status.huggingface.co {
+    import sign
+    reverse_proxy https://statuspage.betteruptime.com {
+        import rev
+    }
+}
+
+https://ui.endpoints.huggingface.co, https://store.huggingface.co, https://dell.huggingface.co {
+    import sign
+    reverse_proxy https://cname.vercel-dns.com {
+        import rev
+    }
+}
+
+https://neuralconvo.huggingface.co {
+    import sign
+    reverse_proxy https://d3bh913krp35a5.cloudfront.net {
+        import rev
+    }
+}
+
+https://home.huggingface.co {
+    import sign
+    reverse_proxy https://hugging-face.customdomains.okta.com {
+        import rev
+    }
+}
+
+https://api-inference.huggingface.co {
+    import sign
+    redir https://huggingface.co/docs/api-inference/index
+}
+
+https://thumbnails.huggingface.co {
+    import sign
+    reverse_proxy https://d3q5pwvs88w1av.cloudfront.net {
+        header_up Host cdn-thumbnails.huggingface.co
+        import rev
+    }
+}
+
+https://ui.autotrain.huggingface.co {
+    import sign
+    redir https://huggingface.co/autotrain
+}
+
 https://hf.space, https://*.hf.space {
     import sign
     reverse_proxy * https://54.211.190.56 https://18.209.42.97 https://18.215.194.14 https://18.209.42.97 {
@@ -722,6 +822,22 @@ https://hf.space, https://*.hf.space {
     }
 }
 # HuggingFace End
+
+# KhanAcademy Start
+https://www.khanacademy.org, https://*.khanacademy.org {
+    import sign
+    reverse_proxy * https://prod.khan.map.fastly.net {
+        import rev
+    }
+}
+
+https://cdn.kastatic.org {
+    import sign
+    reverse_proxy * https://fastly.kastatic.org {
+        import rev
+    }
+}
+# KhanAcademy End
 
 # Common Start
 :80 {

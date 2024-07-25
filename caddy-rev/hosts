@@ -5,12 +5,44 @@
 127.0.0.1	cdn.steamcommunity.com
 #Steam END
 
+#KhanAcademy Start
+127.0.0.1	www.khanacademy.org
+127.0.0.1	cdn.kastatic.org
+#KhanAcademy END
+
 #VSCode.dev Start
 127.0.0.1	vscode.dev
 127.0.0.1	www.vscode.dev
 127.0.0.1	auth.vscode.dev
 127.0.0.1	open.vscode.dev
 #VSCode.dev END
+
+#HuggingFace Start
+127.0.0.1	huggingface.co
+127.0.0.1	www.huggingface.co
+127.0.0.1	datasets-server.huggingface.co
+127.0.0.1	cdn-thumbnails.huggingface.co
+127.0.0.1	transformer.huggingface.co
+127.0.0.1	transformers.huggingface.co
+127.0.0.1	cdn-avatars.huggingface.co
+127.0.0.1	cdn-lfs-us-1.huggingface.co
+127.0.0.1	cdn-uploads.huggingface.co
+127.0.0.1	cdn-lfs-eu-1.huggingface.co
+127.0.0.1	convai.huggingface.co
+127.0.0.1	cdn-lfs.huggingface.co
+127.0.0.1	cdn.huggingface.co
+127.0.0.1	cdn-datasets.huggingface.co
+127.0.0.1	discuss.huggingface.co
+127.0.0.1	status.huggingface.co
+127.0.0.1	ui.endpoints.huggingface.co
+127.0.0.1	store.huggingface.co
+127.0.0.1	dell.huggingface.co
+127.0.0.1	neuralconvo.huggingface.co
+127.0.0.1	home.huggingface.co
+127.0.0.1	api-inference.huggingface.co
+127.0.0.1	thumbnails.huggingface.co
+127.0.0.1	ui.autotrain.huggingface.co
+#HuggingFace END
 
 #Pixiv Start
 127.0.0.1	pixiv.net
@@ -122,6 +154,49 @@
 127.0.0.1	dashboard.twitch.tv
 127.0.0.1	ingest.twitch.tv
 #Twitch END
+
+#DuckDuckGo Start
+127.0.0.1	duckduckgo.com
+127.0.0.1	www.duckduckgo.com
+127.0.0.1	ac.duckduckgo.com
+127.0.0.1	start.duckduckgo.com
+127.0.0.1	help.duckduckgo.com
+127.0.0.1	icons.duckduckgo.com
+127.0.0.1	proxy.duckduckgo.com
+127.0.0.1	images.duckduckgo.com
+127.0.0.1	improving.duckduckgo.com
+127.0.0.1	external-content.duckduckgo.com
+#DuckDuckGo END
+
+#Proton Start
+127.0.0.1	proton.me
+127.0.0.1	mail.proton.me
+127.0.0.1	calendar.proton.me
+127.0.0.1	drive.proton.me
+127.0.0.1	pass.proton.me
+127.0.0.1	account.proton.me
+127.0.0.1	account-api.proton.me
+#Proton END
+
+#Torproject Start
+127.0.0.1	torproject.org
+127.0.0.1	www.torproject.org
+127.0.0.1	archive.torproject.org
+127.0.0.1	blog.torproject.org
+127.0.0.1	bridges.torproject.org
+127.0.0.1	check.torproject.org
+127.0.0.1	deb.torproject.org
+127.0.0.1	dist.torproject.org
+127.0.0.1	support.torproject.org
+127.0.0.1	snowflake.torproject.org
+#Torproject END
+
+#APKMirror Start
+127.0.0.1	apkmirror.com
+127.0.0.1	www.apkmirror.com
+127.0.0.1	dev.apkmirror.com
+127.0.0.1	downloadr2.apkmirror.com
+#APKMirror END
 
 #Wikinews Start
 127.0.0.1	zh.wikinews.org
@@ -887,9 +962,14 @@
 #Nyaa END
 
 #AO3 Start
-127.0.0.1	archiveofourown,org
+127.0.0.1	archiveofourown.org
 #AO3 END
 
 #BandCamp Start
 127.0.0.1	bandcamp.com
+127.0.0.1	vocallective.bandcamp.com
+127.0.0.1	popplers5.bandcamp.com
+127.0.0.1	austinwintory.bandcamp.com
+127.0.0.1	maxll.bandcamp.com
+127.0.0.1	dataairlines.bandcamp.com
 #BandCamp END
